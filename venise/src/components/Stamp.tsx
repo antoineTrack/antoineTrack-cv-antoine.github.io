@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 // Tampon façon dossier (« TOP SECRET », « CONFIRMÉ »…), légèrement incliné et encré.
 export default function Stamp({
   children,
-  color = '#8B3A3A',
+  color = '#7B2E3A',
   rotate = -8,
   className = '',
 }: {

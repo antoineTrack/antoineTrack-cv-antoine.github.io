@@ -44,7 +44,7 @@ export default function Polaroid({
             className="absolute inset-0 flex items-center justify-center text-center p-4"
             style={{
               background:
-                'linear-gradient(160deg, #F0C9A0 0%, #E8823F 55%, #C77B4A 100%)',
+                'linear-gradient(160deg, #F2CDC4 0%, #E1928C 55%, #C56B72 100%)',
             }}
             role="img"
             aria-label={moment.alt}

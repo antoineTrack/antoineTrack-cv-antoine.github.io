@@ -12,16 +12,16 @@ export default function VeniceScene({ className = '' }: { className?: string }) 
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        {/* Ciel coucher de soleil */}
+        {/* Ciel coucher de soleil rosé */}
         <linearGradient id="ciel" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#F0C9A0" />
-          <stop offset="45%" stopColor="#E8823F" />
-          <stop offset="100%" stopColor="#C77B4A" />
+          <stop offset="0%" stopColor="#F2CDC4" />
+          <stop offset="45%" stopColor="#E1928C" />
+          <stop offset="100%" stopColor="#C56B72" />
         </linearGradient>
-        {/* Eau du canal */}
+        {/* Eau du canal (mauve du soir) */}
         <linearGradient id="eau" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#2E5F80" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="#2E5F80" stopOpacity="0.85" />
+          <stop offset="0%" stopColor="#8C3A54" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#7B2E3A" stopOpacity="0.8" />
         </linearGradient>
       </defs>
 
@@ -29,10 +29,10 @@ export default function VeniceScene({ className = '' }: { className?: string }) 
       <rect width="800" height="400" fill="url(#ciel)" />
 
       {/* Soleil bas sur l'horizon */}
-      <circle cx="400" cy="215" r="70" fill="#F3ECE0" opacity="0.75" />
+      <circle cx="400" cy="215" r="70" fill="#F7EDE8" opacity="0.75" />
 
       {/* Silhouette des palais (ligne de toits + campanile) */}
-      <g fill="#8F5A2A" opacity="0.9">
+      <g fill="#9E5A66" opacity="0.9">
         <rect x="40" y="180" width="120" height="90" />
         <rect x="170" y="150" width="90" height="120" />
         {/* Campanile de Saint-Marc */}
@@ -47,7 +47,7 @@ export default function VeniceScene({ className = '' }: { className?: string }) 
         <rect x="530" y="185" width="230" height="85" />
       </g>
       {/* Arcades du palais */}
-      <g fill="#F3ECE0" opacity="0.25">
+      <g fill="#F7EDE8" opacity="0.25">
         <circle cx="560" cy="205" r="10" />
         <circle cx="595" cy="205" r="10" />
         <circle cx="630" cy="205" r="10" />
@@ -60,14 +60,14 @@ export default function VeniceScene({ className = '' }: { className?: string }) 
       <rect x="0" y="270" width="800" height="130" fill="url(#eau)" />
 
       {/* Reflets scintillants */}
-      <g stroke="#F3ECE0" strokeOpacity="0.4" strokeWidth="2">
+      <g stroke="#F7EDE8" strokeOpacity="0.4" strokeWidth="2">
         <line x1="380" y1="300" x2="420" y2="300" />
         <line x1="360" y1="330" x2="440" y2="330" />
         <line x1="390" y1="360" x2="410" y2="360" />
       </g>
 
       {/* Gondole avec sa rame */}
-      <g fill="#4A2E12">
+      <g fill="#3E2230">
         <path d="M120 340 q90 40 210 0 q-30 22 -105 22 q-75 0 -105 -22 z" />
         {/* Ferro (proue) */}
         <path d="M120 340 q-16 -6 -18 -28 l8 2 q2 16 14 22 z" />
@@ -75,7 +75,7 @@ export default function VeniceScene({ className = '' }: { className?: string }) 
         <rect x="205" y="292" width="7" height="42" rx="3" />
         <circle cx="208" cy="286" r="7" />
         {/* Rame */}
-        <line x1="212" y1="300" x2="290" y2="330" stroke="#4A2E12" strokeWidth="4" />
+        <line x1="212" y1="300" x2="290" y2="330" stroke="#3E2230" strokeWidth="4" />
       </g>
     </svg>
   )

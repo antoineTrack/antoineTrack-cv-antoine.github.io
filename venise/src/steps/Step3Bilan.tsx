@@ -24,7 +24,7 @@ function Vignette({ photo, alt }: { photo: string; alt: string }) {
       ) : (
         <span
           className="block h-full w-full"
-          style={{ background: 'linear-gradient(160deg,#F0C9A0,#E8823F)' }}
+          style={{ background: 'linear-gradient(160deg,#F2CDC4,#E1928C)' }}
         />
       )}
     </span>

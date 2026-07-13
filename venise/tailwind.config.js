@@ -3,18 +3,19 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
-      // Palette exacte du dossier papier
+      // Direction artistique « Romantique — rose poudré & bordeaux »
+      // (mêmes noms de tokens : tout le site bascule d'un coup)
       colors: {
-        creme: '#F3ECE0',       // Fond crème
-        papier: '#EADFC9',      // Papier secondaire
-        ocre: '#B5824A',        // Ocre
-        brun: '#4A2E12',        // Brun texte
-        'brun-doux': '#8F5A2A', // Brun doux
-        terracotta: '#C77B4A',  // Terracotta
-        sunset: '#E8823F',      // Coucher de soleil
-        peche: '#F0C9A0',       // Pêche
-        canal: '#2E5F80',       // Bleu canal (accents Venise)
-        cachet: '#8B3A3A',      // Rouge cachet
+        creme: '#F7EDE8',       // Fond crème rosé
+        papier: '#F0DCD4',      // Blush papier (secondaire)
+        ocre: '#C99A6A',        // Or rose (cadres, filets)
+        brun: '#3E2230',        // Brun-prune (texte principal)
+        'brun-doux': '#855560', // Mauve rosé (texte secondaire, italiques)
+        terracotta: '#C56B72',  // Rose profond (accents)
+        sunset: '#E1928C',      // Rose corail (dégradés)
+        peche: '#F2CDC4',       // Pêche rosée (dégradés)
+        canal: '#8C3A54',       // Bordeaux-rose (focus, petits accents)
+        cachet: '#7B2E3A',      // Bordeaux profond (tampons)
       },
       fontFamily: {
         // Titres / display

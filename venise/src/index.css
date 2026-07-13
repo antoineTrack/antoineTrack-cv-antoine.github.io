@@ -25,7 +25,7 @@
 
   /* Focus clavier toujours visible et lisible sur fond crème */
   :focus-visible {
-    outline: 3px solid #2e5f80;
+    outline: 3px solid #8c3a54;
     outline-offset: 3px;
     border-radius: 4px;
   }

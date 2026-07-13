@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 
 // Pluie discrète de cœurs/confettis pour l'écran final.
 // Respecte prefers-reduced-motion : si réduit, on n'affiche rien.
-const COULEURS = ['#8B3A3A', '#C77B4A', '#E8823F', '#B5824A', '#2E5F80']
+const COULEURS = ['#7B2E3A', '#C56B72', '#E1928C', '#C99A6A', '#8C3A54']
 
 export default function Confetti({ reduit }: { reduit: boolean }) {
   // Positions/délais figés une seule fois

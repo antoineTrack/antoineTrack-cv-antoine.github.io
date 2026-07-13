@@ -46,7 +46,7 @@ export default function Step0Envelope({
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(135deg, transparent 49.5%, rgba(74,46,18,0.08) 50%), linear-gradient(-135deg, transparent 49.5%, rgba(74,46,18,0.08) 50%)',
+                'linear-gradient(135deg, transparent 49.5%, rgba(62,34,48,0.08) 50%), linear-gradient(-135deg, transparent 49.5%, rgba(62,34,48,0.08) 50%)',
             }}
           />
           {/* Destinataire */}
@@ -67,9 +67,9 @@ export default function Step0Envelope({
           <div
             className="h-full w-full"
             style={{
-              background: 'linear-gradient(180deg, #E4D6BC 0%, #D8C6A5 100%)',
+              background: 'linear-gradient(180deg, #EBD0C8 0%, #E0BBB0 100%)',
               clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
-              boxShadow: '0 2px 6px rgba(74,46,18,0.15)',
+              boxShadow: '0 2px 6px rgba(62,34,48,0.15)',
             }}
           />
         </motion.div>
@@ -126,16 +126,16 @@ function WaxSeal() {
     <svg width="96" height="104" viewBox="0 0 100 108" aria-hidden="true" className="overflow-visible">
       <defs>
         <radialGradient id="cire" cx="36%" cy="30%" r="78%">
-          <stop offset="0%" stopColor="#C85555" />
-          <stop offset="55%" stopColor="#9B3D3D" />
-          <stop offset="100%" stopColor="#6E2A2A" />
+          <stop offset="0%" stopColor="#B44E64" />
+          <stop offset="55%" stopColor="#8C3A54" />
+          <stop offset="100%" stopColor="#5E2030" />
         </radialGradient>
       </defs>
 
       {/* Coulures de cire sous le cachet (petites gouttes) */}
-      <circle cx="34" cy="92" r="6" fill="#8B3A3A" />
-      <circle cx="52" cy="98" r="8" fill="#7E3232" />
-      <circle cx="68" cy="90" r="5" fill="#8B3A3A" />
+      <circle cx="34" cy="92" r="6" fill="#7B2E3A" />
+      <circle cx="52" cy="98" r="8" fill="#6A2836" />
+      <circle cx="68" cy="90" r="5" fill="#7B2E3A" />
 
       {/* Blob de cire, bien rond et rebondi */}
       <path
@@ -144,11 +144,11 @@ function WaxSeal() {
       />
 
       {/* Reflet brillant en haut à gauche */}
-      <ellipse cx="38" cy="30" rx="16" ry="10" fill="#F3ECE0" opacity="0.22" />
+      <ellipse cx="38" cy="30" rx="16" ry="10" fill="#F7EDE8" opacity="0.22" />
 
       {/* Anneau embossé + pastilles autour */}
-      <circle cx="50" cy="50" r="30" fill="none" stroke="#F3ECE0" strokeOpacity="0.3" strokeWidth="2" />
-      <g fill="#F3ECE0" fillOpacity="0.35">
+      <circle cx="50" cy="50" r="30" fill="none" stroke="#F7EDE8" strokeOpacity="0.3" strokeWidth="2" />
+      <g fill="#F7EDE8" fillOpacity="0.35">
         {Array.from({ length: 8 }).map((_, i) => {
           const a = (i / 8) * Math.PI * 2
           return <circle key={i} cx={50 + Math.cos(a) * 30} cy={50 + Math.sin(a) * 30} r="1.6" />
@@ -158,12 +158,12 @@ function WaxSeal() {
       {/* Cœur embossé au centre */}
       <path
         d="M50 64 C40 55 30 49 30 40 C30 33 36 30 41 31 C45 32 48 35 50 39 C52 35 55 32 59 31 C64 30 70 33 70 40 C70 49 60 55 50 64 Z"
-        fill="#F3ECE0"
+        fill="#F7EDE8"
         fillOpacity="0.88"
       />
 
       {/* Étincelles qui scintillent */}
-      <g fill="#F0C9A0">
+      <g fill="#F2CDC4">
         <path d="M12 20 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6z">
           <animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" repeatCount="indefinite" />
         </path>
