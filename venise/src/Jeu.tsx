@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Confetti from './components/Confetti'
 import VeniceScene from './components/VeniceScene'
@@ -26,17 +26,20 @@ type Indice =
   | { type: 'anagramme'; lettres: string; aide: string }
   | { type: 'fait'; texte: string }
 
+// Progression volontairement énigmatique : les premiers indices restent très
+// abstraits (elle ne doit PAS deviner tout de suite de quoi il s'agit),
+// et ça ne se précise qu'au fil du jeu.
 const INDICES: Indice[] = [
+  { type: 'énigme', texte: 'On ne me met pas dans une boîte, et pourtant je vaux tous les trésors.' },
   { type: 'énigme', texte: 'Je n’ai pas de bruit de moteurs, seulement le clapot de l’eau.' },
   { type: 'énigme', texte: 'On me traverse debout, porté par une seule rame.' },
   { type: 'énigme', texte: 'Une fois par an, mille visages me recouvrent.' },
   { type: 'énigme', texte: 'Mon cœur porte le nom d’un évangéliste ailé.' },
-  { type: 'énigme', texte: 'Née de la mer, jamais je ne sombre.' },
   { type: 'rébus', emojis: '🎭 🚤 🌉 🌊', aide: 'un masque · une barque · un pont · l’eau' },
   { type: 'anagramme', lettres: 'S · E · N · I · V · E', aide: 'six lettres, tout est là' },
   {
     type: 'fait',
-    texte: 'Une ville italienne bâtie sur 118 îlots, reliée par près de 400 ponts — et pas une seule voiture.',
+    texte: 'Née de la mer, bâtie sur 118 îlots, reliée par près de 400 ponts — et pas une seule voiture.',
   },
 ]
 
@@ -53,6 +56,12 @@ const PROCHE_EAU = [
 const PROCHE_THEME = [
   'gondole', 'gondola', 'carnaval', 'masque', 'lagune', 'canal', 'canaux',
   'pont', 'rialto', 'saint marc', 'st marc', 'doge', 'spritz',
+]
+// Si elle tente un objet-cadeau : on l'oriente en douceur, sans rien dévoiler.
+const PROCHE_OBJET = [
+  'bijou', 'bague', 'collier', 'montre', 'sac', 'parfum', 'fleur', 'fleurs',
+  'bouquet', 'chocolat', 'chocolats', 'telephone', 'iphone', 'voiture',
+  'cadeau', 'vetement', 'livre', 'peluche', 'restaurant', 'concert', 'bon',
 ]
 
 const POINTS_DEPART = 1000
@@ -77,7 +86,7 @@ function formaterTemps(sec: number): string {
 
 interface Tentative {
   texte: string
-  temperature: 'chaud' | 'tiede' | 'theme' | 'froid'
+  temperature: 'chaud' | 'tiede' | 'theme' | 'objet' | 'froid'
 }
 
 export default function Jeu() {
@@ -114,12 +123,6 @@ export default function Jeu() {
   const termine = gagne || abandon
   const tousIndices = indicesReveles >= INDICES.length
 
-  // Flou de la carte mystère : diminue à chaque indice, nul à la victoire
-  const flou = useMemo(() => {
-    if (gagne) return 0
-    return Math.max(0, 15 - indicesReveles * 1.7)
-  }, [indicesReveles, gagne])
-
   function revelerIndice() {
     if (tousIndices || termine) return
     setIndicesReveles((n) => n + 1)
@@ -128,6 +131,7 @@ export default function Jeu() {
   }
 
   function temperature(norm: string): Tentative['temperature'] {
+    if (PROCHE_OBJET.some((v) => norm.includes(v))) return 'objet'
     if (PROCHE_PAYS.some((v) => norm.includes(v))) return 'chaud'
     if (PROCHE_EAU.some((v) => norm.includes(v))) return 'tiede'
     if (PROCHE_THEME.some((v) => norm.includes(v))) return 'theme'
@@ -135,10 +139,11 @@ export default function Jeu() {
   }
 
   const MESSAGES: Record<Tentative['temperature'], string> = {
-    chaud: '🔥 Tu chauffes — le bon pays ! Mais ce n’est pas cette ville-là.',
-    tiede: '💧 Les canaux, l’eau… tu approches ! Vise plus au sud, en Italie.',
-    theme: '🎭 C’est un symbole de la ville… mais donne-moi son nom !',
-    froid: '❄️ Froid. Relis les indices, la réponse s’y cache.',
+    chaud: '🔥 Tu chauffes… le bon coin du monde ! Mais ce n’est pas tout à fait ça.',
+    tiede: '💧 L’eau, les canaux… tu approches ! Cherche encore.',
+    theme: '🎭 Ça, c’est un de mes symboles… mais quel est mon nom ?',
+    objet: '🙂 Non, ça ne se déballe pas. Laisse-toi guider par les indices.',
+    froid: '❄️ Pas encore… relis les indices, le mot s’y cache.',
   }
 
   function gagner() {
@@ -208,13 +213,13 @@ export default function Jeu() {
       {/* En-tête */}
       <header className="text-center max-w-xl mb-6">
         <div className="flex justify-center mb-3">
-          <Stamp rotate={-5}>Mission mystère</Stamp>
+          <Stamp rotate={-5}>Dossier confidentiel</Stamp>
         </div>
         <h1 className="font-display font-bold text-4xl sm:text-5xl text-brun">
-          Devine la destination
+          Mission mystère
         </h1>
         <p className="mt-2 font-body italic text-brun-doux">
-          Une ville se cache derrière ces indices. Sauras-tu la trouver&nbsp;?
+          Un seul mot se cache au bout de ces énigmes. À toi de le trouver&nbsp;?
         </p>
         {meilleur !== null && (
           <p className="mt-1 font-mono text-xs uppercase tracking-widest text-brun-doux/70">
@@ -223,25 +228,31 @@ export default function Jeu() {
         )}
       </header>
 
-      {/* Carte mystère qui se dé-floute */}
-      <div className="relative w-full max-w-xl rounded-xl overflow-hidden border border-ocre/50 shadow-carte mb-6">
-        {/* Le flou est appliqué directement à l'illustration et baisse à chaque indice */}
-        <div
-          className="transition-[filter] duration-700"
-          style={{ filter: `blur(${flou}px)`, transform: 'scale(1.08)' }}
-          aria-hidden="true"
-        >
-          <VeniceScene className="w-full h-40 sm:h-52" />
-        </div>
-        {!gagne && (
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <span className="font-display font-bold text-5xl sm:text-6xl text-creme/80 drop-shadow">
+      {/* Carte mystère : abstraite tant qu'elle n'a pas trouvé.
+          L'illustration (qui révélerait tout) n'apparaît qu'à la victoire. */}
+      <div className="relative w-full max-w-xl h-40 sm:h-52 rounded-xl overflow-hidden border border-ocre/50 shadow-carte mb-6">
+        {gagne ? (
+          // Révélation finale
+          <VeniceScene className="w-full h-full" />
+        ) : (
+          // Visuel neutre : dégradé + « ? » qui « respire » au fil des indices
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ background: 'linear-gradient(140deg, #E1928C 0%, #8C3A54 100%)' }}
+            aria-hidden="true"
+          >
+            {/* halo qui grandit doucement à chaque indice révélé */}
+            <div
+              className="absolute rounded-full bg-creme/10 transition-all duration-700"
+              style={{ width: `${40 + indicesReveles * 12}%`, height: `${40 + indicesReveles * 12}%` }}
+            />
+            <span className="relative font-display font-bold text-6xl text-creme/85 drop-shadow">
               ?
             </span>
           </div>
         )}
         <span className="absolute bottom-2 right-3 font-mono text-[10px] uppercase tracking-widest text-creme/90">
-          {gagne ? 'carte postale' : 'carte postale mystère'}
+          {gagne ? 'enfin dévoilé' : 'scellé'}
         </span>
       </div>
 
@@ -294,7 +305,7 @@ export default function Jeu() {
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              placeholder="Nom de la ville…"
+              placeholder="Ta réponse…"
               aria-describedby="feedback"
               className="flex-1 min-w-0 bg-white/80 border border-brun-doux/40 rounded-full px-5 py-3
                          font-body text-brun placeholder:text-brun-doux/50 focus:border-canal"
@@ -402,7 +413,7 @@ function IndiceContenu({ indice }: { indice: Indice }) {
 }
 
 function emojiTemp(t: Tentative['temperature']): string {
-  return t === 'chaud' ? '🔥' : t === 'tiede' ? '💧' : t === 'theme' ? '🎭' : '❄️'
+  return t === 'chaud' ? '🔥' : t === 'tiede' ? '💧' : t === 'theme' ? '🎭' : t === 'objet' ? '🙂' : '❄️'
 }
 
 function pastilleStyle(t: Tentative['temperature']): React.CSSProperties {
@@ -410,6 +421,7 @@ function pastilleStyle(t: Tentative['temperature']): React.CSSProperties {
     chaud: { color: '#7B2E3A', borderColor: '#7B2E3A66', background: '#7B2E3A11' },
     tiede: { color: '#8C3A54', borderColor: '#8C3A5466', background: '#8C3A5411' },
     theme: { color: '#855560', borderColor: '#85556066', background: '#85556011' },
+    objet: { color: '#855560', borderColor: '#85556040', background: 'transparent' },
     froid: { color: '#855560', borderColor: '#85556040', background: 'transparent' },
   }
   return map[t]
@@ -452,7 +464,7 @@ function Victoire({
         className="relative z-10 w-full max-w-md bg-papier border border-ocre/60 rounded-2xl
                    shadow-carte px-7 py-9 text-center"
       >
-        <p className="etiquette text-cachet mb-2">{gagne ? 'Destination trouvée' : 'La réponse était'}</p>
+        <p className="etiquette text-cachet mb-2">{gagne ? 'Mot trouvé' : 'Le mot était'}</p>
         <motion.h2
           initial={reduit ? { opacity: 0 } : { scale: 0.6, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -463,6 +475,10 @@ function Victoire({
         </motion.h2>
         <p className="mt-2 font-body italic text-brun-doux">
           {gagne ? 'Bravo, exactement ! 🎉' : 'Ce sera pour la prochaine fois 🤍'}
+        </p>
+        {/* La vraie nature du cadeau n'est dévoilée qu'ICI, à la toute fin */}
+        <p className="mt-3 font-display text-lg text-cachet">
+          Prépare ta valise… on part à Venise ✈️
         </p>
 
         {/* Récap */}
