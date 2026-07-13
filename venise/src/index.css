@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Base — ambiance « dossier vintage vénitien »
+   ============================================================ */
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-creme text-brun font-body antialiased;
+    /* Sécurise les encoches iPhone */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+
+  /* Focus clavier toujours visible et lisible sur fond crème */
+  :focus-visible {
+    outline: 3px solid #2e5f80;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Étiquette façon dossier (label collé) */
+  .etiquette {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-brun-doux;
+  }
+
+  /* Bouton principal « continuer / valider » */
+  .btn-dossier {
+    @apply font-mono text-sm uppercase tracking-widest px-6 py-3 rounded-full
+           bg-brun text-creme transition-transform duration-200
+           hover:scale-[1.03] active:scale-95 disabled:opacity-40
+           disabled:cursor-not-allowed;
+  }
+
+  .btn-secondaire {
+    @apply font-mono text-xs uppercase tracking-widest px-4 py-2 rounded-full
+           border border-brun-doux/50 text-brun-doux transition-colors
+           hover:bg-brun-doux/10;
+  }
+}
+
+/* ============================================================
+   Grain / texture papier — overlay SVG noise très subtil
+   Appliqué globalement via le composant <NoiseOverlay/>
+   ============================================================ */
+.noise-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Curseur clignotant de l'effet machine à écrire */
+.caret::after {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 2px;
+  background: currentColor;
+  vertical-align: text-bottom;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   Respect de prefers-reduced-motion :
+   on neutralise animations/transitions pour qui le demande.
+   Framer Motion est géré séparément via le hook useReducedMotion.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .caret::after {
+    animation: none;
+  }
+}
