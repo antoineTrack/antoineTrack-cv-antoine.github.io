@@ -64,10 +64,15 @@ const PROCHE_OBJET = [
   'cadeau', 'vetement', 'livre', 'peluche', 'restaurant', 'concert', 'bon',
 ]
 
-const POINTS_DEPART = 1000
-const COUT_INDICE = 80
-const COUT_ERREUR = 40
-const CLE_MEILLEUR = 'venise-jeu-meilleur-score'
+const NOTE_DEPART = 10 // note sur 10 au départ
+const MALUS_INDICE = 1 // −1 point par indice révélé volontairement
+const MALUS_ERREUR = 0.5 // −0,5 point par mauvaise réponse
+const CLE_MEILLEUR = 'venise-jeu-meilleure-note'
+
+// Affiche la note à la française (virgule, pas de « .0 » inutile)
+function formaterNote(n: number): string {
+  return (Number.isInteger(n) ? String(n) : n.toFixed(1).replace('.', ',')) + '/10'
+}
 
 function normaliser(s: string): string {
   return s
@@ -95,7 +100,7 @@ export default function Jeu() {
   const [reponse, setReponse] = useState('')
   const [indicesReveles, setIndicesReveles] = useState(1) // le 1er indice est offert
   const [essais, setEssais] = useState(0)
-  const [score, setScore] = useState(POINTS_DEPART)
+  const [note, setNote] = useState(NOTE_DEPART)
   const [historique, setHistorique] = useState<Tentative[]>([])
   const [message, setMessage] = useState<string>('')
   const [secousse, setSecousse] = useState(0)
@@ -126,7 +131,7 @@ export default function Jeu() {
   function revelerIndice() {
     if (tousIndices || termine) return
     setIndicesReveles((n) => n + 1)
-    setScore((s) => Math.max(0, s - COUT_INDICE))
+    setNote((n) => Math.max(0, n - MALUS_INDICE))
     setMessage('Nouvel indice débloqué 🔎')
   }
 
@@ -147,13 +152,11 @@ export default function Jeu() {
   }
 
   function gagner() {
-    const finalScore = Math.max(50, score)
-    setScore(finalScore)
     setGagne(true)
-    if (meilleur === null || finalScore > meilleur) {
-      setMeilleur(finalScore)
+    if (meilleur === null || note > meilleur) {
+      setMeilleur(note)
       try {
-        localStorage.setItem(CLE_MEILLEUR, String(finalScore))
+        localStorage.setItem(CLE_MEILLEUR, String(note))
       } catch {
         /* stockage indisponible */
       }
@@ -173,7 +176,7 @@ export default function Jeu() {
     // Mauvaise réponse : feedback + malus + révèle un indice de plus
     const temp = temperature(norm)
     setEssais((n) => n + 1)
-    setScore((s) => Math.max(0, s - COUT_ERREUR))
+    setNote((n) => Math.max(0, n - MALUS_ERREUR))
     setHistorique((h) => [{ texte: reponse.trim(), temperature: temp }, ...h].slice(0, 8))
     setMessage(MESSAGES[temp])
     setSecousse((s) => s + 1)
@@ -191,7 +194,7 @@ export default function Jeu() {
     setReponse('')
     setIndicesReveles(1)
     setEssais(0)
-    setScore(POINTS_DEPART)
+    setNote(NOTE_DEPART)
     setHistorique([])
     setMessage('')
     setGagne(false)
@@ -204,7 +207,7 @@ export default function Jeu() {
     <div className="min-h-[100dvh] px-4 py-8 sm:py-12 flex flex-col items-center">
       {/* Bandeau de stats */}
       <div className="w-full max-w-xl grid grid-cols-4 gap-2 mb-6">
-        <Stat label="Score" valeur={score} />
+        <Stat label="Note" valeur={formaterNote(note)} />
         <Stat label="Essais" valeur={essais} />
         <Stat label="Chrono" valeur={formaterTemps(secondes)} />
         <Stat label="Indices" valeur={`${indicesReveles}/${INDICES.length}`} />
@@ -223,7 +226,7 @@ export default function Jeu() {
         </p>
         {meilleur !== null && (
           <p className="mt-1 font-mono text-xs uppercase tracking-widest text-brun-doux/70">
-            Meilleur score : {meilleur}
+            Meilleure note : {formaterNote(meilleur)}
           </p>
         )}
       </header>
@@ -280,7 +283,7 @@ export default function Jeu() {
       {/* Bouton révéler un indice */}
       {!termine && !tousIndices && (
         <button type="button" onClick={revelerIndice} className="btn-secondaire mb-6">
-          Révéler un indice (−{COUT_INDICE} pts)
+          Révéler un indice (−{MALUS_INDICE} pt)
         </button>
       )}
 
@@ -364,7 +367,7 @@ export default function Jeu() {
         {termine && (
           <Victoire
             gagne={gagne}
-            score={score}
+            note={note}
             essais={essais}
             secondes={secondes}
             indicesReveles={indicesReveles}
@@ -429,7 +432,7 @@ function pastilleStyle(t: Tentative['temperature']): React.CSSProperties {
 
 function Victoire({
   gagne,
-  score,
+  note,
   essais,
   secondes,
   indicesReveles,
@@ -438,7 +441,7 @@ function Victoire({
   onRejouer,
 }: {
   gagne: boolean
-  score: number
+  note: number
   essais: number
   secondes: number
   indicesReveles: number
@@ -483,14 +486,16 @@ function Victoire({
 
         {/* Récap */}
         <div className="mt-6 grid grid-cols-2 gap-3 text-left">
-          <Recap label="Score" valeur={gagne ? score : 0} />
+          <Recap label="Note" valeur={gagne ? formaterNote(note) : '—'} />
           <Recap label="Essais" valeur={essais} />
           <Recap label="Temps" valeur={formaterTemps(secondes)} />
           <Recap label="Indices utilisés" valeur={`${indicesReveles}/${INDICES.length}`} />
         </div>
         {meilleur !== null && (
           <p className="mt-4 font-mono text-xs uppercase tracking-widest text-brun-doux/70">
-            {gagne && score >= meilleur ? '🏆 Nouveau meilleur score !' : `Meilleur score : ${meilleur}`}
+            {gagne && note >= meilleur
+              ? '🏆 Nouvelle meilleure note !'
+              : `Meilleure note : ${formaterNote(meilleur)}`}
           </p>
         )}
 

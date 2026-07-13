@@ -9,8 +9,8 @@ deviner… c'est **Venise**. Pensé mobile-first, romantique et ludique.
   emojis, une **anagramme**, et un **fait** presque explicite.
 - Une **carte postale mystère** qui se **dé-floute** à chaque indice révélé (nette à la
   victoire).
-- **Score** (1000 pts au départ, −80 par indice, −40 par erreur), **chrono** et
-  **nombre d'essais**.
+- Une **note sur 10** (10/10 au départ, −1 par indice révélé, −0,5 par erreur),
+  un **chrono** et le **nombre d'essais**.
 - Un **feedback « chaud / froid »** : selon ta réponse, le jeu te dit si tu approches
   (bon pays 🔥, ville d'eau 💧, symbole de la ville 🎭, ou froid ❄️), avec l'historique
   de tes tentatives.
