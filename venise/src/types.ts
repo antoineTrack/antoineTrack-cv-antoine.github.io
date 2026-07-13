@@ -1,35 +1,41 @@
-// Types partagés du projet
+// Types partagés du projet « Opération Cité Flottante »
 
-/** Un moment de notre histoire (étape 2 — timeline) */
+/** Une photo en polaroïd */
 export interface Moment {
-  /** Nom du fichier photo dans /public/photos (sans le chemin) */
-  photo: string
-  /** Texte alternatif accessible pour l'image */
-  alt: string
-  /** Légende affichée sous le polaroïd */
-  legende: string
-  /** Petite date/étiquette façon dossier (optionnelle) */
-  date?: string
-  /** Inclinaison en degrés pour l'effet « posé à la main » */
-  inclinaison: number
+  photo: string // nom du fichier dans /public/photos
+  alt: string // texte alternatif accessible
+  legende: string // légende manuscrite sous le polaroïd
+  inclinaison: number // inclinaison en degrés
 }
 
-/** Un vol (étape 4 — carte d'embarquement) */
+/** Un élément du bilan (enveloppe 2) */
+export interface BilanItem {
+  titre: string
+  note: string
+  photo?: string // vignette ronde optionnelle
+}
+
+/** Un indice de la devinette (enveloppe 3) */
+export interface Indice {
+  l1: string
+  l2: string
+}
+
+/** Un vol / carte d'embarquement (enveloppe 4) */
 export interface Vol {
-  type: 'Aller' | 'Retour'
+  entete: string
   date: string
   heure: string
-  depart: string
-  arrivee: string
   heureArrivee: string
+  depart: string
   villeDepart: string
+  arrivee: string
   villeArrivee: string
+  detail: string
 }
 
-/** Une journée du programme (étape 5) */
-export interface Journee {
-  id: string
+/** Un défi à cocher à Venise (enveloppe 5) */
+export interface DefiItem {
   titre: string
-  sousTitre: string
-  activites: string[]
+  note: string
 }

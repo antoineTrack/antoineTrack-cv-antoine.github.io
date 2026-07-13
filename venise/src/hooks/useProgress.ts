@@ -8,12 +8,13 @@ import { useCallback, useEffect, useState } from 'react'
 //    sans repartir de zéro.
 // =====================================================================
 
-export const NB_ETAPES = 7 // étapes 0 → 6
-/** Étapes « comptées » dans la barre de progression (1 → 6, l'enveloppe est l'intro). */
+export const NB_ETAPES = 8 // étapes 0 → 7
+/** Étapes « comptées » dans la barre de progression (1 → 7, l'enveloppe scellée est l'intro). */
 export const PREMIERE_ETAPE_COMPTEE = 1
-export const DERNIERE_ETAPE = 6
+export const DERNIERE_ETAPE = 7
 
-const CLE_STORAGE = 'venise-progress-v1'
+// v2 : nouvelle structure du dossier (Opération Cité Flottante, 6 enveloppes)
+const CLE_STORAGE = 'venise-progress-v2'
 
 interface EtatProgress {
   /** Étape actuellement affichée */

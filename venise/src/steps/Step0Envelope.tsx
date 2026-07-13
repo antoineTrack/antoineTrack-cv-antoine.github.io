@@ -27,12 +27,14 @@ export default function Step0Envelope({
   return (
     <div className="min-h-[100dvh] flex flex-col items-center justify-center px-6 text-center">
       <motion.p
-        className="etiquette mb-8"
+        className="etiquette mb-8 max-w-xs leading-relaxed"
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        Dossier confidentiel · 30.07
+        Opération « Cité Flottante »
+        <br />
+        Courrier confidentiel
       </motion.p>
 
       {/* Enveloppe */}
@@ -50,7 +52,7 @@ export default function Step0Envelope({
           {/* Destinataire */}
           <div className="absolute bottom-6 left-0 right-0 text-center">
             <p className="font-display text-xl sm:text-2xl text-brun">Pour toi</p>
-            <p className="etiquette mt-1">à n'ouvrir que le 30 juillet</p>
+            <p className="etiquette mt-1">à ouvrir le 30 juillet, en premier</p>
           </div>
         </div>
 
@@ -111,7 +113,7 @@ export default function Step0Envelope({
         <p className="font-body text-brun-doux text-sm max-w-xs">
           Touche le cachet de cire pour ouvrir le dossier.
         </p>
-        <Stamp rotate={-6}>Top Secret</Stamp>
+        <Stamp rotate={-6}>Confidentiel</Stamp>
       </motion.div>
     </div>
   )

@@ -1,17 +1,20 @@
-# 🎟️ Dossier Confidentiel — Venise (notre 1 an)
+# 🎟️ Opération Cité Flottante — Venise (notre 1 an)
 
-Un site web interactif, façon **mission secrète / carnet de voyage vénitien**, qui révèle
-étape par étape un week-end surprise à Venise (18–21 septembre 2026).
+Le **complément numérique du dossier papier** : une reproduction fidèle et interactive
+du dossier « Opération Cité Flottante », qui révèle étape par étape un week-end surprise
+à Venise (18–21 septembre 2026).
 
-Ce n'est pas une page qui défile : c'est une **chasse au trésor en 7 étapes déverrouillables**.
+Ce n'est pas une page qui défile : c'est une **chasse au trésor de 6 enveloppes
+déverrouillables**, façon dossier confidentiel.
 
-- **Étape 0** — L'enveloppe scellée (on brise le cachet de cire)
-- **Étape 1** — Le mot du 30 juillet (effet machine à écrire)
-- **Étape 2** — Notre histoire (timeline de polaroïds)
-- **Étape 3** — La devinette (5 indices, il faut trouver « Venise »)
-- **Étape 4** — La révélation (VENISE + cartes d'embarquement + compte à rebours en direct)
-- **Étape 5** — Le programme des 3 jours (accordéon)
-- **Étape 6** — Le dernier mot (+ pluie de cœurs)
+- **L'enveloppe scellée** — on brise le cachet de cire pour entrer
+- **Le mot du 30 juillet** — l'introduction, révélée progressivement
+- **Enveloppe n° 1 — Là où tout a commencé** (Cap d'Agde, l'Amnésia) + tampon AUTHENTIFIÉ
+- **Enveloppe n° 2 — Une année à deux** : le bilan coché des grands moments
+- **Enveloppe n° 3 — La devinette** (5 indices, il faut trouver « Venise »)
+- **Enveloppe n° 4 — La destination révélée** (Venise + cartes d'embarquement Volotea + compte à rebours en direct)
+- **Enveloppe n° 5 — Nos défis à Venise** : cases réellement cochables sur place
+- **Enveloppe n° 6 — Le dernier mot** (+ pluie de cœurs)
 
 La progression est **sauvegardée automatiquement** (localStorage) : elle peut fermer et
 rouvrir sans repartir de zéro.
@@ -50,9 +53,9 @@ Les photos vivent dans **`public/photos/`**. Dépose-les avec **exactement** ces
 | `annecy.jpg`    | Un week-end à Annecy                              |
 | `noel.jpg`      | Notre premier Noël                                |
 | `dixhuit.jpg`   | Nos 18 ans / rencontre des familles               |
-| `concert.jpg`   | Le concert de SDM                                 |
-| `rose.jpg`      | (bonus, non utilisée par défaut)                  |
-| `dernier.jpg`   | (bonus, non utilisée par défaut)                  |
+| `concert.jpg`   | Le concert de SDM et Jok'Air                       |
+| `rose.jpg`      | La rose du 30 juillet (mot d'intro)               |
+| `dernier.jpg`   | Vous deux (enveloppe n° 6, le dernier mot)        |
 
 - Tant qu'une photo manque, un joli **fond dégradé « coucher de soleil »** s'affiche à sa
   place : le site reste présentable même sans photos.
@@ -61,7 +64,7 @@ Les photos vivent dans **`public/photos/`**. Dépose-les avec **exactement** ces
 
 ### Modifier les textes
 
-Tout le texte (le mot du 30 juillet, la timeline, les indices, les vols, le programme,
+Tout le texte (le mot du 30 juillet, les 6 enveloppes, les indices, les vols, les défis,
 le dernier mot) est regroupé dans un seul fichier :
 
 > **`src/data/content.ts`**

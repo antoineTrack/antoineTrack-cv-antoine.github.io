@@ -1,143 +1,182 @@
 // =====================================================================
-//  Contenu du dossier — tous les TEXTES EXACTS et données sont ici.
-//  (Un seul endroit à modifier si tu veux ajuster un mot.)
+//  Contenu du dossier « Opération Cité Flottante »
+//  Reproduction FIDÈLE du dossier papier (textes exacts).
+//  C'est le seul fichier à modifier pour ajuster un mot.
 // =====================================================================
 
-import type { Moment, Vol, Journee } from '../types'
+import type { BilanItem, DefiItem, Indice, Moment, Vol } from '../types'
 
-// ---------- Étape 1 — Le mot du 30 juillet ----------
-// Affiché ligne par ligne (effet machine à écrire).
-export const MOT_TRENTE_JUILLET: string[] = [
-  'Aujourd’hui ça fait un an…',
-  'du rire, de l’amour sincère,',
-  'du partage et du voyage.',
-  'J’ai préparé quelque chose.',
-]
+// Nom de code + pied de page présents sur chaque « page » du dossier
+export const OPERATION = 'Opération Cité Flottante'
+export const PIED_DE_PAGE = 'Opération Cité Flottante · dossier confidentiel'
 
-// ---------- Étape 2 — Notre histoire (timeline) ----------
-export const MOMENTS: Moment[] = [
-  {
-    photo: 'capdagde.jpg',
-    alt: 'Une plage au Cap d’Agde, l’été dernier',
-    legende: 'L’été dernier — une plage au Cap d’Agde. Jogging noir, on s’est remarqués.',
-    date: 'Été',
-    inclinaison: -4,
-  },
-  {
-    photo: 'amnesia.jpg',
-    alt: 'Ambiance de nuit à l’Amnésia',
-    legende: 'Quelques nuits plus tard — premier baiser, à l’Amnésia.',
-    date: 'Nuit',
-    inclinaison: 3,
-  },
-  {
-    photo: 'annecy.jpg',
-    alt: 'Un week-end au lac d’Annecy',
-    legende: 'Nos week-ends à Annecy.',
-    date: 'Escapades',
-    inclinaison: -3,
-  },
-  {
-    photo: 'noel.jpg',
-    alt: 'Notre premier Noël ensemble',
-    legende: 'Notre premier Noël.',
-    date: 'Décembre',
-    inclinaison: 4,
-  },
-  {
-    photo: 'dixhuit.jpg',
-    alt: 'Nos 18 ans',
-    legende: 'Nos permis presque en même temps, nos 18 ans, la rencontre des familles.',
-    date: 'Nos 18 ans',
-    inclinaison: -2,
-  },
-  {
-    photo: 'concert.jpg',
-    alt: 'Le concert de SDM',
-    legende: 'La panne de la veille d’Annecy (la voiture du grand-père) — puis le concert de SDM.',
-    date: 'Live',
-    inclinaison: 3,
-  },
-]
+// ---------- Le mot d'introduction — 30 juillet ----------
+export const MOT_INTRO = {
+  surTitre: 'Un mot avant de commencer — à lire en premier',
+  titre: '30 juillet',
+  // Paragraphes révélés progressivement
+  paragraphes: [
+    ['Aujourd’hui, ça fait un an.'],
+    ['Un an de rire, d’amour sincère,', 'de partage et de voyage.'],
+    [
+      'Je voulais marquer le coup. Alors j’ai préparé',
+      'quelque chose : des enveloppes, à ouvrir dans l’ordre.',
+    ],
+    [
+      'La troisième te posera une devinette —',
+      'trouve la réponse avant d’ouvrir la suivante.',
+    ],
+  ],
+  signature: 'Joyeux anniversaire, mon amour.',
+  sousSignature: 'I love you baby',
+  photo: 'rose.jpg',
+  photoLegende: 'I love you baby',
+  photoAlt: 'Une rose, le 30 juillet',
+}
 
-// ---------- Étape 3 — La devinette ----------
-export const INDICES: string[] = [
-  'Je n’ai pas de bruit de moteurs, seulement le clapot de l’eau.',
-  'On me traverse debout, porté par une seule rame.',
-  'Une fois par an, mille visages me recouvrent.',
-  'Mon cœur porte le nom d’un évangéliste ailé.',
-  'Née de la mer, jamais je ne sombre.',
-]
+// ---------- Enveloppe 1 — Là où tout a commencé ----------
+export const ENVELOPPE_1 = {
+  numero: 1,
+  titre: 'Là où tout a commencé',
+  sujet: 'Été, Cap d’Agde. Pièce fondatrice du dossier.',
+  paragraphes: [
+    'Les faits remontent à un après-midi de plage, au Cap d’Agde.',
+    'Sur la plage, on décide de rejoindre un groupe repéré sur le sable. Idée audacieuse. Résultat inespéré.',
+    'Dans le groupe : un garçon tout en noir — jogging noir, t-shirt noir, en pleine plage. Un choix vestimentaire discutable. Et pourtant, tu l’as remarqué. Et tu ne l’as jamais oublié.',
+    'Quelques nuits plus tard, à l’Amnésia : au milieu de la foule et de la musique, un premier baiser. À cet instant précis, deux histoires n’en sont devenues qu’une.',
+  ],
+  conclusion:
+    'Conclusion du dossier : coup de foudre confirmé. Aucune amnésie constatée depuis.',
+  tampon: 'Authentifié',
+  photos: [
+    { photo: 'capdagde.jpg', alt: 'Le Cap d’Agde, l’été où tout a commencé', legende: 'l’été où tout a commencé', inclinaison: -3 },
+    { photo: 'amnesia.jpg', alt: 'Nos soirées', legende: 'nos soirées', inclinaison: 3 },
+  ] as Moment[],
+}
 
-/** Réponses acceptées (comparaison insensible à la casse et aux accents). */
+// ---------- Enveloppe 2 — Une année à deux (le bilan) ----------
+export const ENVELOPPE_2 = {
+  numero: 2,
+  titre: 'Une année à deux — le bilan',
+  sujet: 'Tout est vrai. Tout est vérifié. Tout est validé avec mention.',
+  items: [
+    { titre: 'Les week-ends à Annecy', note: 'notre échappée entre lac et montagnes — jamais lassante', photo: 'annecy.jpg' },
+    { titre: 'Notre premier Noël ensemble', note: 'le premier d’une longue série', photo: 'noel.jpg' },
+    { titre: 'Nos permis, décrochés presque ensemble', note: 'et deux voitures quasi jumelles — coïncidence ? Non : destin.' },
+    { titre: 'Nos 18 ans, célébrés côte à côte', note: 'le passage à l’âge adulte, main dans la main', photo: 'dixhuit.jpg' },
+    { titre: 'La rencontre de nos familles', note: 'présentations officielles réussies — approuvés à l’unanimité' },
+    { titre: 'La panne de la veille d’Annecy', note: 'voiture du grand-père réquisitionnée : rien ne nous arrête' },
+    { titre: 'L’épisode de l’aire d’autoroute', note: 'dossier scellé. Nous nierons tout, toujours.' },
+    { titre: 'Le concert de SDM et Jok’Air', note: 'à hurler les paroles ensemble, au milieu de la foule', photo: 'concert.jpg' },
+  ] as BilanItem[],
+  bilan: [
+    'Bilan officiel de l’année :',
+    'nous deux, c’est du rire, de l’amour sincère,',
+    'du partage et du voyage.',
+  ],
+  piecesTagline: '— et ce n’est que le début de la collection —',
+}
+
+// ---------- Enveloppe 3 — La devinette ----------
+export const ENVELOPPE_3 = {
+  numero: 3,
+  titre: 'Qui suis-je ?',
+  sujet: 'Résous l’énigme avant d’ouvrir la suite. Pas de triche !',
+  indices: [
+    { l1: 'Je n’ai pas de bruit de moteurs,', l2: 'seulement le clapot de l’eau.' },
+    { l1: 'On me traverse debout,', l2: 'porté par une seule rame.' },
+    { l1: 'Une fois par an,', l2: 'mille visages me recouvrent.' },
+    { l1: 'Mon cœur porte le nom', l2: 'd’un évangéliste ailé.' },
+    { l1: 'Née de la mer,', l2: 'jamais je ne sombre.' },
+  ] as Indice[],
+  note: '(Bonne réponse ou pas, l’enveloppe suivante te le dira.)',
+}
+
+/** Réponses acceptées (insensible à la casse et aux accents). */
 export const REPONSES_VALIDES: string[] = ['venise', 'venice', 'venezia']
 
-// ---------- Étape 4 — La révélation ----------
+// ---------- Enveloppe 4 — La destination révélée ----------
+export const ENVELOPPE_4 = {
+  numero: 4,
+  titre: 'La destination — révélée',
+  sujet: 'Aujourd’hui tu ouvres cette enveloppe. En septembre, on décolle.',
+  accroche: 'Alors, trouvé ? Bravo (ou pas, on t’aime pareil).',
+  grandMot: 'C’est Venise. Toi et moi. Trois jours.',
+  campBase: 'Notre camp de base : Marghera, au bord de la lagune.',
+  cloture: 'Les billets sont réservés. Il ne te reste qu’à dire oui.',
+  tampon: 'Réservé & confirmé',
+}
+
 export const VOLS: Vol[] = [
   {
-    type: 'Aller',
-    date: '18 SEP 2026',
+    entete: 'Aller — le grand départ',
+    date: 'Vendredi 18 sept. 2026',
     heure: '20:00',
-    depart: 'LYS',
-    arrivee: 'VCE',
     heureArrivee: '21:20',
+    depart: 'LYS',
     villeDepart: 'Lyon',
+    arrivee: 'VCE',
     villeArrivee: 'Venise',
+    detail: 'Volotea — direct — 1h20',
   },
   {
-    type: 'Retour',
-    date: '21 SEP 2026',
+    entete: 'Retour — des souvenirs plein les valises',
+    date: 'Lundi 21 sept. 2026',
     heure: '22:00',
-    depart: 'VCE',
-    arrivee: 'LYS',
     heureArrivee: '23:25',
+    depart: 'VCE',
     villeDepart: 'Venise',
+    arrivee: 'LYS',
     villeArrivee: 'Lyon',
+    detail: 'Volotea — direct — 1h20',
   },
 ]
 
 /** Décollage aller : 18 septembre 2026, 20:00, heure de Paris (CEST = UTC+2). */
 export const DATE_DECOLLAGE = new Date('2026-09-18T20:00:00+02:00')
 
-// ---------- Étape 5 — Le programme ----------
-export const PROGRAMME: Journee[] = [
-  {
-    id: 'vendredi',
-    titre: 'Vendredi soir',
-    sousTitre: 'On pose les valises',
-    activites: [
-      'Arrivée à Venise',
-      'Balade dans Cannaregio de nuit',
-      'Premier gelato',
-    ],
-  },
-  {
-    id: 'samedi',
-    titre: 'Samedi',
-    sousTitre: 'Le grand jour',
-    activites: [
-      'Rialto au lever du jour',
-      'Place & Basilique Saint-Marc',
-      'Palais des Doges + Pont des Soupirs',
-      'Cicchetti le soir',
-    ],
-  },
-  {
-    id: 'dimanche',
-    titre: 'Dimanche',
-    sousTitre: 'Les couleurs, puis le retour',
-    activites: [
-      'Burano, les îles colorées',
-      'Campo Santa Margherita',
-      'Dernière glace',
-      'Vol retour à 22h',
-    ],
-  },
-]
+// ---------- Enveloppe 5 — Nos défis à Venise ----------
+export const ENVELOPPE_5 = {
+  numero: 5,
+  titre: 'Nos défis à Venise',
+  sujet: 'À cocher sur place. À deux, tout compte double.',
+  defis: [
+    { titre: 'Traverser la lagune en train', note: 'et voir la ville apparaître au milieu de l’eau' },
+    { titre: 'Remonter le Grand Canal en vaporetto', note: 'le « bus-bateau » des Vénitiens, au coucher du soleil' },
+    { titre: 'Se perdre volontairement dans les ruelles', note: 'sans téléphone, jusqu’à trouver une place déserte' },
+    { titre: 'La place Saint-Marc au réveil', note: 'avant la foule, quand elle n’appartient qu’aux amoureux' },
+    { titre: 'Un spritz au bord d’un canal', note: 'pour trinquer à l’année écoulée — et à toutes les autres' },
+    { titre: 'Sceller un secret sur un pont', note: 'celui que nous choisirons sera le nôtre pour toujours' },
+    { titre: 'Le défi bonus, gardé secret', note: 'révélé sur place, le moment venu…' },
+  ] as DefiItem[],
+  tampon: 'Priorité : amour',
+}
 
-// ---------- Étape 6 — Le dernier mot ----------
-export const DERNIER_MOT = {
-  paragraphe:
-    'Ce dossier se referme ici. Le suivant est déjà ouvert : il durera toute la vie, si tu veux bien.',
+// ---------- Enveloppe 6 — Le dernier mot ----------
+export const ENVELOPPE_6 = {
+  numero: 6,
+  titre: 'Le dernier mot',
+  paragraphes: [
+    [
+      'Tout a commencé sur une plage du Cap d’Agde,',
+      'un jour un peu audacieux,',
+      'avec un garçon tout en noir qui ne savait pas encore',
+      'qu’il vivait le plus beau jour de sa vie.',
+    ],
+    [
+      'Un an plus tard, nous voilà sur un pont de Venise.',
+      'Entre les deux : Annecy, un Noël, deux permis,',
+      'deux familles, une panne mémorable — et ce rire',
+      'qui ne nous a jamais quittés.',
+    ],
+    [
+      'Ce dossier se referme ici. Le suivant est déjà ouvert :',
+      'il durera toute la vie, si tu veux bien.',
+    ],
+  ],
   signature: 'Joyeux premier anniversaire, mon amour.',
+  sousSignature: 'Celui qui t’aime — depuis un an, et pour longtemps.',
+  tampon: 'S’autodétruit dans un câlin',
+  photo: 'dernier.jpg',
+  photoAlt: 'Nous deux, à Venise',
 }

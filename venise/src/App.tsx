@@ -7,11 +7,12 @@ import ProgressBar from './components/ProgressBar'
 
 import Step0Envelope from './steps/Step0Envelope'
 import Step1Letter from './steps/Step1Letter'
-import Step2Timeline from './steps/Step2Timeline'
-import Step3Riddle from './steps/Step3Riddle'
-import Step4Reveal from './steps/Step4Reveal'
-import Step5Program from './steps/Step5Program'
-import Step6Final from './steps/Step6Final'
+import Step2Origin from './steps/Step2Origin'
+import Step3Bilan from './steps/Step3Bilan'
+import Step4Riddle from './steps/Step4Riddle'
+import Step5Reveal from './steps/Step5Reveal'
+import Step6Defis from './steps/Step6Defis'
+import Step7Final from './steps/Step7Final'
 
 // =====================================================================
 //  App — chef d'orchestre.
@@ -30,15 +31,17 @@ export default function App() {
       case 1:
         return <Step1Letter onContinuer={avancer} reduit={reduit} />
       case 2:
-        return <Step2Timeline onContinuer={avancer} reduit={reduit} />
+        return <Step2Origin onContinuer={avancer} reduit={reduit} />
       case 3:
-        return <Step3Riddle onResolu={avancer} reduit={reduit} />
+        return <Step3Bilan onContinuer={avancer} reduit={reduit} />
       case 4:
-        return <Step4Reveal onContinuer={avancer} reduit={reduit} />
+        return <Step4Riddle onResolu={avancer} reduit={reduit} />
       case 5:
-        return <Step5Program onContinuer={avancer} reduit={reduit} />
+        return <Step5Reveal onContinuer={avancer} reduit={reduit} />
       case 6:
-        return <Step6Final onRejouer={() => allerA(0)} reduit={reduit} />
+        return <Step6Defis onContinuer={avancer} reduit={reduit} />
+      case 7:
+        return <Step7Final onRejouer={() => allerA(0)} reduit={reduit} />
       default:
         return null
     }

@@ -8,12 +8,15 @@ import type { Moment } from '../types'
 export default function Polaroid({
   moment,
   reduit,
+  taille = 'md',
 }: {
   moment: Moment
   reduit: boolean
+  taille?: 'sm' | 'md'
 }) {
   const [erreur, setErreur] = useState(false)
   const src = `${import.meta.env.BASE_URL}photos/${moment.photo}`
+  const largeur = taille === 'sm' ? 'w-[150px] sm:w-[190px]' : 'w-[260px] sm:w-[300px]'
 
   return (
     <motion.figure
@@ -23,7 +26,7 @@ export default function Polaroid({
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       whileHover={reduit ? undefined : { rotate: 0, scale: 1.04, y: -6 }}
-      className="w-[260px] sm:w-[300px] bg-white p-3 pb-5 shadow-polaroid rounded-sm"
+      className={`${largeur} bg-white p-3 pb-4 shadow-polaroid rounded-sm`}
       style={{ rotate: `${moment.inclinaison}deg` }}
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-papier">
@@ -52,14 +55,8 @@ export default function Polaroid({
             </span>
           </div>
         )}
-        {moment.date && (
-          <span className="absolute top-2 left-2 font-mono text-[10px] uppercase tracking-widest
-                           bg-creme/85 text-brun px-1.5 py-0.5 rounded">
-            {moment.date}
-          </span>
-        )}
       </div>
-      <figcaption className="mt-3 font-body text-sm leading-snug text-brun">
+      <figcaption className="mt-2 text-center font-body italic text-sm leading-snug text-brun-doux">
         {moment.legende}
       </figcaption>
     </motion.figure>
