@@ -1,0 +1,13 @@
+# Déploiement Netlify.
+# Si ce dossier "venise" est à la racine du dépôt sur Netlify, "base" n'est pas nécessaire.
+# S'il est dans un sous-dossier (ce qui est le cas ici : /venise), configure "base" sur Netlify
+# OU laisse ce fichier tel quel en réglant le "Base directory" = venise dans l'UI Netlify.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA : toutes les routes renvoient vers index.html (utile si tu ajoutes react-router plus tard)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
