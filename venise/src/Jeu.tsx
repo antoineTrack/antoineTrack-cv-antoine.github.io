@@ -35,12 +35,12 @@ const INDICES: Indice[] = [
   { type: 'énigme', texte: 'On me traverse debout, porté par une seule rame.' },
   { type: 'énigme', texte: 'Une fois par an, mille visages me recouvrent.' },
   { type: 'énigme', texte: 'Mon cœur porte le nom d’un évangéliste ailé.' },
-  { type: 'rébus', emojis: '🎭 🚤 🌉 🌊', aide: 'un masque · une barque · un pont · l’eau' },
-  { type: 'anagramme', lettres: 'S · E · N · I · V · E', aide: 'six lettres, tout est là' },
   {
     type: 'fait',
     texte: 'Née de la mer, bâtie sur 118 îlots, reliée par près de 400 ponts — et pas une seule voiture.',
   },
+  { type: 'rébus', emojis: '🎭 🚤 🌉 🌊', aide: 'un masque · une barque · un pont · l’eau' },
+  { type: 'anagramme', lettres: 'S · E · N · I · V · E', aide: 'six lettres, tout est là' },
 ]
 
 // --- Dictionnaires « chaud / froid » (réponses proches) ---
